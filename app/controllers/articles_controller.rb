@@ -1,7 +1,7 @@
 class ArticlesController < ApplicationController
-    def show
+    before_action :set_article, only: [:show, :edit, :update, :destroy]
 
-        @article = Article.find(params[:id])
+    def show
     end
 
 
@@ -13,8 +13,7 @@ class ArticlesController < ApplicationController
         @article = Article.new
     end
 
-    def edit
-        @article = Article.find(params[:id])
+    def edit 
     end
 
     def create
@@ -28,7 +27,6 @@ class ArticlesController < ApplicationController
     end
 
     def update
-        @article = Article.find(params[:id])
         if @article.update(params.require(:article).permit(:title, :description))
             flash[:notice] = "Article was successfully updated."
             redirect_to @article
@@ -38,9 +36,14 @@ class ArticlesController < ApplicationController
     end
 
     def destroy
-        @article = Article.find(params[:id])
         @article.destroy
         redirect_to articles_path
+    end
+
+    private#anything below this is a private method
+
+    def set_article
+        @article = Article.find(params[:id])
     end
 
 
