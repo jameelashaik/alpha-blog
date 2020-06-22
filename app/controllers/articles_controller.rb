@@ -17,7 +17,7 @@ class ArticlesController < ApplicationController
     end
 
     def create
-        @article = Article.new(params.require(:article).permit(:title, :description))
+        @article = Article.new(article_params)
         if @article.save
             flash[:notice] = "Article was created successfully."
             redirect_to @article
@@ -27,7 +27,7 @@ class ArticlesController < ApplicationController
     end
 
     def update
-        if @article.update(params.require(:article).permit(:title, :description))
+        if @article.update(article_params)
             flash[:notice] = "Article was successfully updated."
             redirect_to @article
         else
@@ -40,10 +40,14 @@ class ArticlesController < ApplicationController
         redirect_to articles_path
     end
 
-    private#anything below this is a private method
+    private#anything below this is a private method that cannout work outside this articlescontroller
 
     def set_article
         @article = Article.find(params[:id])
+    end
+
+    def article_params
+        params.require(:article).permit(:title, :description)
     end
 
 
